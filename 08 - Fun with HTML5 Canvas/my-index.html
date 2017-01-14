@@ -10,12 +10,18 @@
 const canvas = document.querySelector('#draw');
 const context = canvas.getContext('2d');
 let isMouseDown = false;
+let position = {x: 0, y: 0}
 
+function updatePosition(event) {
+    position.x = event.x;
+    position.y = event.y;
+}
 
 function startDrawing(event) {
     console.log('Start drawing.');
     context.beginPath();
     isMouseDown = true;
+    updatePosition(event);
 }
 
 function stopDrawing(event) {
@@ -27,8 +33,9 @@ function stopDrawing(event) {
 function draw(event) {
     if (isMouseDown) {
         console.log(`drawing to (${event.x}, ${event.y})`)
-        context.lineTo(event.x, event.y);
-        context.fill()
+        context.arcTo(position.x, position.y, event.x, event.y, 1);
+        context.stroke()
+        updatePosition(event);
     }
 }
 
