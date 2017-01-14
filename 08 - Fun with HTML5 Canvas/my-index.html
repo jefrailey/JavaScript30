@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HTML5 Canvas</title>
+</head>
+<body>
+<canvas id="draw" width="800" height="800"></canvas>
+<script>
+const canvas = document.querySelector('#draw');
+const context = canvas.getContext('2d');
+let isMouseDown = false;
+
+
+function startDrawing(event) {
+    console.log('Start drawing.');
+    context.beginPath();
+    isMouseDown = true;
+}
+
+function stopDrawing(event) {
+    console.log('Stop drawing.');
+    context.closePath();
+    isMouseDown = false;
+}
+
+function draw(event) {
+    if (isMouseDown) {
+        console.log(`drawing to (${event.x}, ${event.y})`)
+        context.lineTo(event.x, event.y);
+        context.fill()
+    }
+}
+
+function getMousePosition(event) {
+    return {x: event.movementX, y: event.movementY};
+}
+canvas.addEventListener('mousedown', startDrawing);
+canvas.addEventListener('mousemove', draw);
+canvas.addEventListener('mouseup', stopDrawing);
+
+</script>
+
+<style>
+  html, body {
+    margin:0;
+  }
+</style>
+
+</body>
+</html>
