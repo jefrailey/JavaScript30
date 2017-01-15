@@ -39,9 +39,6 @@ function draw(event) {
     }
 }
 
-function getMousePosition(event) {
-    return {x: event.movementX, y: event.movementY};
-}
 canvas.addEventListener('mousedown', startDrawing);
 canvas.addEventListener('mousemove', draw);
 canvas.addEventListener('mouseup', stopDrawing);
