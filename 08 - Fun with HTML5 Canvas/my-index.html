@@ -10,32 +10,50 @@
 const canvas = document.querySelector('#draw');
 const context = canvas.getContext('2d');
 let isMouseDown = false;
-let position = {x: 0, y: 0}
+let position = {x: 0, y: 0};
+let hue = 0;
+let lineWidthDirection = true;
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+context.strokeStyle = '#BADA55';
+context.lineJoin = 'round';
+context.lineCap = 'round';
+context.lineWidth = hue;
 
 function updatePosition(event) {
-    position.x = event.x;
-    position.y = event.y;
+    [position.x, position.y] = [event.x, event.y];
 }
 
 function startDrawing(event) {
-    console.log('Start drawing.');
-    context.beginPath();
+    // console.log('Start drawing.');
     isMouseDown = true;
     updatePosition(event);
 }
 
 function stopDrawing(event) {
-    console.log('Stop drawing.');
+    // console.log('Stop drawing.');
     context.closePath();
     isMouseDown = false;
 }
 
 function draw(event) {
     if (isMouseDown) {
-        console.log(`drawing to (${event.x}, ${event.y})`)
-        context.arcTo(position.x, position.y, event.x, event.y, 1);
+        context.beginPath();
+        context.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+        // console.log(`drawing to (${event.x}, ${event.y})`)
+        context.lineTo(event.x, event.y)
         context.stroke()
         updatePosition(event);
+        hue++;
+        console.log(context.lineWidth);
+        if (context.lineWidth > 99 || context.lineWidth <= 1) {
+            lineWidthDirection = !lineWidthDirection;
+        }
+        if (lineWidthDirection) {
+            context.lineWidth++;
+        } else {
+            context.lineWidth--;
+        }
     }
 }
 
