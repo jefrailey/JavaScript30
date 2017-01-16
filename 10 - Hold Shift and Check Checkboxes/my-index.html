@@ -109,9 +109,8 @@
 
   checkboxes.forEach(checkbox => checkbox.addEventListener('click', bulkCheck));
   function bulkCheck(event) {
-    if (!lastClicked) {lastClicked = this;}
+    if (!lastClicked || !event.shiftKey) {lastClicked = this; return;}
     // console.log(event.shiftKey);
-    if (!event.shiftKey) {return}
     const lastClickedIdx = checkboxes.indexOf(lastClicked);
     const currentIdx = checkboxes.indexOf(this);
     const boxesToCheck = checkboxes.slice(
