@@ -26,6 +26,10 @@ function updateProgress() {
 function jumpToPercent(event) {
     video.currentTime = (event.offsetX / video.clientWidth) * video.duration;
 }
+function toggleButtonIcon() {
+    const icon = this.paused ? '►' : '❚ ❚';
+    playButton.textContent = icon;
+}
 video.addEventListener('click', togglePlay);
 video.addEventListener('timeupdate', updateProgress);
 playButton.addEventListener('click', togglePlay);
@@ -33,3 +37,5 @@ playbackRate.addEventListener('change', changeRate);
 volume.addEventListener('change', changeVolume);
 skips.forEach(button => button.addEventListener('click', skip));
 totalProgress.addEventListener('click', jumpToPercent);
+video.addEventListener('pause', toggleButtonIcon);
+video.addEventListener('play', toggleButtonIcon);
