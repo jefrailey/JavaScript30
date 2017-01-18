@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Key Detection</title>
+  <script type="text/javascript" src="http://www.cornify.com/js/cornify.js"></script>
+</head>
+<body>
+<script>
+let sequence = [];
+
+function updateSequence(event) {
+    sequence.push(event.key);
+    if (sequence.length > 6) {sequence.shift();}
+    if (isSpecial(sequence)) {
+        cornify_add();
+        sequence = [];
+    }
+    console.log(sequence);
+}
+
+function isSpecial(sequence) {
+    // There has to be a better array comparator.
+    return sequence.toString() == ['a', 'b', 'c', 'd', 'e', 'f'].toString()
+}
+document.addEventListener('keydown', updateSequence);
+</script>
+</body>
+</html>
