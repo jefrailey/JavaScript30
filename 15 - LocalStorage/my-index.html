@@ -32,15 +32,15 @@
 
   }
 
-  function loadTapas() {
-    const html = items.map((item, index) => {
+  function listToHTML(list = [], parentElement) {
+    const html = list.map((item, index) => {
       const checked = (item.done ? "checked" : "");
       return `<li>
-                <input type="checkbox" data-index=${index} value=${item.done} ${checked}>
-                <label>${item.text}</label>
+                <input type="checkbox" data-index=${index} id="item${index}" ${checked}>
+                <label for="item${index}">${item.text}</label>
               </li>`;
     }).join('')
-    itemsList.innerHTML = html;
+    parentElement.innerHTML = html;
   }
 
   document.addEventListener('DOMContentLoaded', loadTapas);
