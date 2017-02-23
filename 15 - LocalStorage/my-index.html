@@ -63,7 +63,16 @@
     parentElement.innerHTML = html;
   }
 
+  function toggleDone(event) {
+    if (!event.target.matches('input')) { return; }
+    const items = JSON.parse(localStorage.getItem('items'));
+    const index = event.target.getAttribute('data-index')
+    items[index].done = !items[index].done
+    localStorage.setItem('items', JSON.stringify(items))
+  }
+
   addItems.addEventListener('submit', addItem);
+  itemsList.addEventListener('click', toggleDone);
   document.addEventListener('DOMContentLoaded', loadTapas);
 
 </script>
