@@ -28,8 +28,28 @@
 <script>
   const addItems = document.querySelector('.add-items');
   const itemsList = document.querySelector('.plates');
-  const items = localStorage.items ? JSON.parse(localStorage.items) : [];
+  const items = [];
 
+  function loadTapas() {
+    const items = JSON.parse(localStorage.items || "[]");
+    listToHTML(items, itemsList);
+  }
+
+  function addItem(event) {
+    event.preventDefault();
+    const text = (this.querySelector('[name="item"]')).value;
+    const item = {
+      text,
+      done: false,
+    };
+    items.push(item);
+    this.reset();
+    listToHTML(items, itemsList);
+    saveItems(items)
+  }
+
+  function saveItems(list = []) {
+    localStorage.setItem('items', JSON.stringify(list));
   }
 
   function listToHTML(list = [], parentElement) {
@@ -43,6 +63,7 @@
     parentElement.innerHTML = html;
   }
 
+  addItems.addEventListener('submit', addItem);
   document.addEventListener('DOMContentLoaded', loadTapas);
 
 </script>
