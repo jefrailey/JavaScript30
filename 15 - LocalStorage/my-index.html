@@ -29,11 +29,11 @@
 <script>
   const addItems = document.querySelector('.add-items');
   const itemsList = document.querySelector('.plates');
-  const items = [];
+  const items = JSON.parse(localStorage.items || "[]");
   const clearPlatesButton = document.querySelector('button');
+  let isAllChecked = JSON.parse(localStorage.isAllChecked || false);
 
   function loadTapas() {
-    const items = JSON.parse(localStorage.items || "[]");
     listToHTML(items, itemsList);
   }
 
@@ -47,7 +47,7 @@
     items.push(item);
     this.reset();
     listToHTML(items, itemsList);
-    saveItems(items)
+    saveItems(items);
   }
 
   function saveItems(list = []) {
@@ -62,20 +62,37 @@
                 <label for="item${index}">${item.text}</label>
               </li>`;
     }).join('')
-    parentElement.innerHTML = html;
+    const checked = isAllChecked ? "checked" : "";
+    const checkAll = `<li>
+                        <input type="checkbox" data-index="all" id="items-all" ${checked}></input>
+                        <label for="items-all">Check All</label>
+                      </li>`;
+    const innerHTML = list.length > 1 ? checkAll + html : html;
+    parentElement.innerHTML = innerHTML;
   }
 
   function toggleDone(event) {
+    const index = event.target.getAttribute('data-index');
     if (!event.target.matches('input')) { return; }
-    const items = JSON.parse(localStorage.getItem('items'));
-    const index = event.target.getAttribute('data-index')
-    items[index].done = !items[index].done
-    localStorage.setItem('items', JSON.stringify(items))
+    if (index === 'all') {toggleDoneAll(); return;}
+    items[index].done = !items[index].done;
+    isAllChecked = false;
+    saveItems(items);
+    localStorage.setItem('isAllChecked', JSON.stringify(isAllChecked));
   }
 
   function clearPlates() {
-    listToHTML([], itemsList);
-    saveItems([]);
+    items.length = 0;
+    listToHTML(items, itemsList);
+    saveItems(items);
+  }
+
+  function toggleDoneAll() {
+    isAllChecked = !isAllChecked
+    items.forEach(item => item.done = isAllChecked);
+    listToHTML(items, itemsList);
+    saveItems(items);
+    localStorage.setItem('isAllChecked', JSON.stringify(isAllChecked));
   }
 
   addItems.addEventListener('submit', addItem);
