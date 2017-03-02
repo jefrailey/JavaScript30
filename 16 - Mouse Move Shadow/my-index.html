@@ -12,17 +12,6 @@
 
   <style>
 
-  :root {
-    --shadowOneX: 10px;
-    --shadowOneY: 10px;
-    --shadowTwoX: -10px;
-    --shadowTwoY: 10px;
-    --shadowThreeX: 10px;
-    --shadowThreeY: -10px;
-    --shadowFourX: -10px;
-    --shadowFourY: -10px;
-  }
-
   html {
     color:black;
     font-family: sans-serif;
@@ -37,13 +26,14 @@
   }
 
   h1 {
-    text-shadow: var(--shadowOneX) var(--shadowOneY) 0 rgba(0,0,0,1), var(--shadowTwoX) var(--shadowTwoY) 0 blue, var(--shadowThreeX) var(--shadowThreeY) 0 green, var(--shadowFourX) var(--shadowFourY) 0 orange;
+    text-shadow: 10px 10px 0 rgba(0,0,0,1), -10px 10px 0 blue, 10px -10px 0 green, -10px -10px 0 orange;
     font-size: 100px;
   }
   </style>
 
 <script>
   const hero = document.querySelector('.hero');
+  const text = hero.querySelector('h1');
 
   function update(event) {
     const maxX = window.screen.availWidth;
@@ -54,30 +44,12 @@
     const constraint = 200
     const shadowX = ((mouseX - center.x)/ maxX) * constraint;
     const shadowY = ((mouseY - center.y) / maxY ) * constraint;
-    document.documentElement.style.setProperty(
-      '--shadowOneX', `${shadowX}px`
-    );
-    document.documentElement.style.setProperty(
-      '--shadowOneY', `${shadowY}px`
-    );
-    document.documentElement.style.setProperty(
-      '--shadowTwoX', `${-shadowX}px`
-    );
-    document.documentElement.style.setProperty(
-      '--shadowTwoY', `${shadowY}px`
-    );
-    document.documentElement.style.setProperty(
-      '--shadowThreeX', `${shadowX}px`
-    );
-    document.documentElement.style.setProperty(
-      '--shadowThreeY', `${-shadowY}px`
-    );
-    document.documentElement.style.setProperty(
-      '--shadowFourX', `${-shadowX}px`
-    );
-    document.documentElement.style.setProperty(
-      '--shadowFourY', `${-shadowY}px`
-    );
+    text.style.textShadow = `
+    ${shadowX}px ${shadowY}px 0 black,
+    ${-shadowX}px ${shadowY}px 0 blue,
+    ${shadowX}px ${-shadowY}px 0 green,
+    ${-shadowX}px ${-shadowY}px 0 orange
+    `;
   }
 
   hero.addEventListener('mousemove', update);
