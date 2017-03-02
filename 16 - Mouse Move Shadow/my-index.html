@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mouse Shadow</title>
+</head>
+<body>
+
+  <div class="hero">
+    <h1 contenteditable>🔥WOAH!</h1>
+  </div>
+
+  <style>
+
+  :root {
+    --shadowOneX: 10px;
+    --shadowOneY: 10px;
+    --shadowTwoX: -10px;
+    --shadowTwoY: 10px;
+    --shadowThreeX: 10px;
+    --shadowThreeY: -10px;
+    --shadowFourX: -10px;
+    --shadowFourY: -10px;
+  }
+
+  html {
+    color:black;
+    font-family: sans-serif;
+  }
+
+  .hero {
+    min-height: 100vh;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    color:black;
+  }
+
+  h1 {
+    text-shadow: var(--shadowOneX) var(--shadowOneY) 0 rgba(0,0,0,1), var(--shadowTwoX) var(--shadowTwoY) 0 blue, var(--shadowThreeX) var(--shadowThreeY) 0 green, var(--shadowFourX) var(--shadowFourY) 0 orange;
+    font-size: 100px;
+  }
+  </style>
+
+<script>
+  const hero = document.querySelector('.hero');
+
+  function update(event) {
+    const maxX = window.screen.availWidth;
+    const maxY = window.screen.availHeight;
+    const mouseX = event.screenX;
+    const center = {x: maxX / 2, y: maxY / 2};
+    const mouseY = event.screenY;
+    const constraint = 200
+    const shadowX = ((mouseX - center.x)/ maxX) * constraint;
+    const shadowY = ((mouseY - center.y) / maxY ) * constraint;
+    document.documentElement.style.setProperty(
+      '--shadowOneX', `${shadowX}px`
+    );
+    document.documentElement.style.setProperty(
+      '--shadowOneY', `${shadowY}px`
+    );
+    document.documentElement.style.setProperty(
+      '--shadowTwoX', `${-shadowX}px`
+    );
+    document.documentElement.style.setProperty(
+      '--shadowTwoY', `${shadowY}px`
+    );
+    document.documentElement.style.setProperty(
+      '--shadowThreeX', `${shadowX}px`
+    );
+    document.documentElement.style.setProperty(
+      '--shadowThreeY', `${-shadowY}px`
+    );
+    document.documentElement.style.setProperty(
+      '--shadowFourX', `${-shadowX}px`
+    );
+    document.documentElement.style.setProperty(
+      '--shadowFourY', `${-shadowY}px`
+    );
+  }
+
+  hero.addEventListener('mousemove', update);
+</script>
+</body>
+</html>
