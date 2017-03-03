@@ -37,9 +37,14 @@
 
   function update(event) {
     const {availWidth: maxX, availHeight: maxY} = window.screen;
-    const {screenX: mouseX, screenY: mouseY} = event;
-    const center = {x: maxX / 2, y: maxY / 2};
+    let {offsetX: mouseX, offsetY: mouseY} = event;
+    const center = {x: hero.offsetWidth / 2,
+                    y: hero.offsetHeight / 2};
     const constraint = 200
+    if (this !== event.target) {
+      mouseX += (event.target.offsetLeft);
+      mouseY += (event.target.offsetTop);
+    }
     const shadowX = ((mouseX - center.x)/ maxX) * constraint;
     const shadowY = ((mouseY - center.y) / maxY ) * constraint;
     text.style.textShadow = `
