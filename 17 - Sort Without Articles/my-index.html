@@ -45,6 +45,37 @@
 <script>
 const bands = ['The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil', 'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State', 'We Came as Romans', 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'];
 
+const articles = ['The', 'A', 'An']
+
+function getFirstWord(phrase) {
+  return phrase.split(' ')[0]
+}
+
+function startsWithArticle(phrase) {
+  const firstWord = getFirstWord(phrase);
+  return articles.indexOf(firstWord) === -1 ? false : true;
+}
+
+function trimArticle(phrase) {
+  if (startsWithArticle(phrase)) {
+    return phrase.split(' ').slice(1).join(' ')
+  }
+  return phrase
+}
+
+function compare(a, b) {
+  const trimmedA = trimArticle(a);
+  const trimmedB = trimArticle(b);
+  if (trimmedA > trimmedB) {
+    return 1;
+  }
+  if (trimmedA < trimmedB) {
+    return -1;
+  }
+  return 0;
+}
+
+bands.sort(compare);
 
 </script>
 
