@@ -180,8 +180,33 @@
     <li data-time="4:04">
       Video 58
     </li>
-
+  </ul>
 <script>
+
+const videoElements = document.querySelector('.videos');
+const videos = Array.from(videoElements.children);
+
+function timeStringToSeconds(timeString) {
+    // "5:43" -> 5 * 60 + 43
+    const [minutes, seconds] = timeString.split(':');
+    return Number(minutes) * 60 + Number(seconds);
+}
+
+function secondsToTimeString(seconds) {
+    // 343 -> "5:43"
+    const remainingSeconds = seconds % 60;
+    const minutes = (seconds - remainingSeconds) / 60;
+    return `${minutes}:${remainingSeconds}`
+}
+
+const totalSeconds = videos.reduce((accumulator, currentValue, currentIndex, array) => {
+    return accumulator + timeStringToSeconds(currentValue.dataset.time);
+}, 0);
+const totalTimeString = secondsToTimeString(totalSeconds);
+console.log(totalSeconds, totalTimeString);
+
 </script>
 </body>
 </html>
+
+
