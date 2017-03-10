@@ -188,8 +188,8 @@ const videos = Array.from(videoElements.children);
 
 function timeStringToSeconds(timeString) {
     // "5:43" -> 5 * 60 + 43
-    const [minutes, seconds] = timeString.split(':');
-    return Number(minutes) * 60 + Number(seconds);
+    const [minutes, seconds] = timeString.split(':').map(parseFloat);
+    return minutes * 60 + seconds;
 }
 
 function secondsToTimeString(seconds) {
